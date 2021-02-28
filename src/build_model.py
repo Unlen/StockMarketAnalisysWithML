@@ -10,7 +10,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import MinMaxScaler
 
-plt.style.use('unlen')
+plt.style.use('ggplot')
 
 # TODO
 # ^^ - exponential smooth to reduce outliers in data
@@ -18,7 +18,7 @@ plt.style.use('unlen')
 # ^^ - etc.
 
 # %%
-df = pd.read_csv('../tickers_with_features/PFE.csv',
+df = pd.read_csv('../tickers_with_features/GME.csv',
                  index_col='Date', parse_dates=True)
 df.shape
 
@@ -51,19 +51,20 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 scaler.fit(X_train)
 X_train[X_train.columns] = scaler.transform(X_train[X_train.columns])
 X_test[X_test.columns] = scaler.transform(X_test[X_test.columns])
+
+scaler.fit(y_train)
+y_train[y_train.columns] = scaler.transform(y_train[y_train.columns])
+y_test[y_test.columns] = scaler.transform(y_test[y_test.columns])
+
 # y nie potrzebuje scalowania, bo to jest etykieta
 
 # %%
-X_train.tail()
-
-# %%
-X_test.head()
-
-# %%
 model = linear_model.LinearRegression()
-regr = model.fit(X_train, y_train)
+model.fit(X_train, y_train)
 # evaluate the model
 y_pred = model.predict(X_test)
+
+# %%
 
 # %%
 # evaluate predictions
@@ -84,6 +85,8 @@ print('R2:', metrics.r2_score(y_test, y_pred))
 # print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
 # print('Root Mean Squared Deviation:', math.sqrt(metrics.mean_squared_error(y_test, y_pred)))
 # print('R2:', metrics.r2_score(y_test, y_pred))
+
+
 
 # %%
 fig, ax = plt.subplots()

@@ -7,7 +7,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+output/
 presentation/
+*.code-workspace
 *.docx
 *.md
 *.svg

@@ -10,5 +10,6 @@ def download_tickers_from_yahoofinance(tickers):
     todays_date = datetime.today().strftime('%Y-%m-%d')
     for ticker in tickers:
         df = pdr.DataReader(ticker, data_source='yahoo', start=start_date, end=todays_date)
+        df.dropna(inplace=True)
         df.to_csv('tickers/' + ticker + '.csv')
         time.sleep(1)  # To not flood the provider

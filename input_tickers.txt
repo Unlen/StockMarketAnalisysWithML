@@ -1,1 +1,5 @@
 GME
+AAPL
+GME
+GOOG
+PFE

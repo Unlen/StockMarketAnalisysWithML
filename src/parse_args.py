@@ -4,10 +4,15 @@ import sys
 
 
 def read_args():
+    # TODO description
     program_description =\
         """
-        Z
-        Q
+        Very simple module that visualizes stock market predictions for selected companies.
+
+        Programs output is a set of paired data which are .svg diagrams and .txt files, which
+        contain actual and predicted prices. First pair
+
+        As an input program takes list of selected companies.
         A
         D
         """
@@ -15,10 +20,12 @@ def read_args():
     parser = argparse.ArgumentParser(description=program_description,
                                      formatter_class=RawTextHelpFormatter)
 
-    parser.add_argument('-N', type=int, nargs=1, metavar='days', default=5,
+    parser.add_argument('N', type=int, metavar='days to predict', default=5,
                         help='an integer number represent N days that ML model will try to predict the price.')
 
-    # no donwload
+    parser.add_argument('M', type=str, metavar='market symbol', default=5,
+                        help='an string representing market symbol e.g. NYSE, GPW. It is needed to perform date manipulation to take days off into account for specific market.')
+
     ticker_group = parser.add_mutually_exclusive_group()
     ticker_group.add_argument('-t', '--tickers', nargs='+', metavar='', type=str,
                               help='list of stock companies separated by a white character.')
@@ -26,8 +33,11 @@ def read_args():
                               default='input_tickers.txt',
                               help='path to file containing stock companies separated by a whitespace character.\n'
                               '* default is \'input_tickers.txt\' in project directory.')
-    ticker_group.add_argument('--no-input', action='store_true', default=False,
-                              help='to not download tickers if they are already present in "./tickers".')
+
+    parser.add_argument('--no-download', action='store_true', default=False,
+                        help='Skips download of tickers. Will fetch from "./tickers".')
+    parser.add_argument('--no-indicators', action='store_true', default=False,
+                        help='Skips addition of features. Will fetch from "./tickers_with_features".')
 
     # parser.add_argument('datapath', type=pathlib.Path)
     # parser.add_argument('--outdir', nargs='?', type=argparse.FileType('w', encoding='utf-8'),

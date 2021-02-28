@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"python.pythonPath": "C:\\Users\\Norbert\\Miniconda3\\python.exe"
+		"python.pythonPath": "C:\\Users\\Norbert\\Miniconda3\\python.exe",
+		"svg.preview.background": "transparent"
 	}
 }
